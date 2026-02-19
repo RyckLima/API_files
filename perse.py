@@ -43,7 +43,7 @@ while True:
     if status == 'SUCCESS' : #se os status tiver ok pode prosseguir
         texto = dados_text.get('text')
         metadados = dados_metadata.get('job_metadata')
-        with open( path2 , 'w') as f:
+        with open( path2 , 'w' , encoding = 'utf-8') as f:
             f.write(f'Aqui está os metadados:{metadados} Aqui está o texto: {texto}\n')
         break
     elif status == 'FAILED' :
