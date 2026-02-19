@@ -1,7 +1,7 @@
 import requests 
 import os
 
-file_name = 'name.pdf'
+file_name = 'SIMITA1aFASE-07022026-C0.pdf'
 path = os.path.join('uploads' , file_name)
 api_key = 'llx-rW7ACedLCrKxe07hcxTOyg090kRSKZhdr96TACPDyNdqOoIC'
 
@@ -9,12 +9,11 @@ with open(path , 'rb') as f:
     
     response = requests.post(url = 'https://api.cloud.llamaindex.ai/api/v1/parsing/upload', 
                     headers = {
-                        'accept' : 'application/json' , 
-                        'Content-Type' : 'multipart/form-data' ,
+                        'accept' : 'application/json' ,
                         'Authorization' : f'Bearer {api_key}' },
                     data = {
                         'language' : 'pt'},
-                    file = f
+                    files = {'file' : f}
                     )
 
 job_id  = response.json()['id']
