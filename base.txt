@@ -1,1 +1,7 @@
 #mark
+
+allowed_file() serve para verificar se uma extensão é válida, para o usuário não mandar um arquivo perigoso ou zoado.
+Essa função serve para proteger o nome do arquivo antes de ser enviado ao sistema de files.
+
+
+upload_file() serve para o usuário subir o arquivo e ele é redirecionado 

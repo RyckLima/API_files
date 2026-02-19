@@ -2,6 +2,7 @@ import  os
 from  flask  import  Flask , flash,  request ,  redirect ,  url_for 
 from  werkzeug.utils  import  secure_filename
 from  flask  import  send_from_directory
+from view import interface_basica
 
 UPLOAD_FOLDER  =  './uploads' 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -32,15 +33,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('upload_file', name=filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+    return interface_basica
                              
 if __name__ == '__main__':
     app.run(debug=True)
