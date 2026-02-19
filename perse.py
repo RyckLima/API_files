@@ -3,9 +3,10 @@ import os
 
 file_name = 'name.pdf'
 path = os.path.join('uploads' , file_name)
+api_key = 'llx-rW7ACedLCrKxe07hcxTOyg090kRSKZhdr96TACPDyNdqOoIC'
 
 with open(path , 'rb') as f:
-    api_key = 'llx-rW7ACedLCrKxe07hcxTOyg090kRSKZhdr96TACPDyNdqOoIC'
+    
     response = requests.post(url = 'https://api.cloud.llamaindex.ai/api/v1/parsing/upload', 
                     headers = {
                         'accept' : 'application/json' , 
@@ -13,6 +14,12 @@ with open(path , 'rb') as f:
                         'Authorization' : f'Bearer {api_key}' },
                     data = {
                         'language' : 'pt'},
-                    file = f,
+                    file = f
                     )
+
+response2 = requests.get(url = 'https://api.cloud.llamaindex.ai/api/v2/parse/:job_id',
+                        headers = {
+                        'accept' : 'application/json' ,
+                        'Authorization' : f'Bearer {api_key}' }
+                        )
 
