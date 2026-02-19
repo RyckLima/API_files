@@ -1,5 +1,6 @@
 import requests 
 import os
+import time
 
 file_name = 'SIMITA1aFASE-07022026-C0.pdf'
 path = os.path.join('uploads' , file_name)
@@ -16,16 +17,34 @@ with open(path , 'rb') as f:
                     files = {'file' : f}
                     )
 
+
 job_id  = response.json()['id']
-path2 = os.path.join('uploads' , f'{job_id}.json')
+path2 = os.path.join('outputs' , f'{job_id}.json')
 
-response2 = requests.get(url = f'https://api.cloud.llamaindex.ai/api/v2/parse/{job_id}',
-                        headers = {
-                        'accept' : 'application/json' ,
-                        'Authorization' : f'Bearer {api_key}' }
-                        )
 
-with open( path2 , 'w') as f:
-    f.write(f'Aqui estão os metadados: {response2.metadata}\n Aqui estão os dados: {response2.text}')
+while True:
+    response2 = requests.get(url = f'https://api.cloud.llamaindex.ai/api/v1/parsing/job/{job_id}',
+                            headers = {
+                            'accept' : 'application/json' ,
+                            'Authorization' : f'Bearer {api_key}' }
+                            )
+    
+    dados = response2.json()
+    status = dados.get('status')
+    print(dados)
+
+    if status == 'SUCCESS': # Ou o status final indicado na doc da v2
+        # SÓ AQUI as chaves 'text' e 'metadata' vão existir!
+        texto = dados.get('text')
+        with open( path2 , 'w') as f:
+            f.write(f' Aqui estão os dados: {texto}')
+        break
+    elif status == 'FAILED':
+        print("Erro no processamento")
+        break
+    
+    time.sleep(2)
+
+    
 
 
