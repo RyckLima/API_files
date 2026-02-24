@@ -3,3 +3,4 @@ venv/
 .cred
 __pycache__/
 *.py[cod]
+uploads/
